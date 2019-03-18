@@ -1,8 +1,44 @@
-from flask import Blueprint,render_template
+from flask import Blueprint, render_template, request, jsonify
+from common.models.User import User
+from common.libs.user.UserService import UserService
 
 route_user = Blueprint('user_page', __name__)
 
 
-@route_user.route("/login")
+@route_user.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("user/login.html")
+    resp = {'code': 200, 'msg': '登录成功', 'data': {}}
+    if request.method == "GET":
+        # GET method
+        # return render_template("user/login.html")
+        return "login method='GET'"
+    else:
+        # POST method
+        req = request.values
+        user_id = req['user_id'] if 'user_id' in req else ''
+        passwd = req['passwd'] if 'passwd' in req else ''
+
+        if user_id is None or len(user_id) < 1:
+            resp['code'] = -1
+            resp['msg'] = '请输入正确的用户名'
+            return jsonify(resp)
+
+        if passwd is None or len(passwd) < 1:
+            resp['code'] = -1
+            resp['msg'] = '请输入正确的密码'
+            return jsonify(resp)
+
+        user_info = User.query.filter_by(id=user_id).first
+        if not user_info:
+            resp['code'] = -1
+            resp['msg'] = '请输入正确的用户名和密码~~'
+        if user_info.passwd != UserService.genePwd(passwd, user_info.salt):
+            resp['code'] = -2
+            resp['msg'] = '请输入正确的密码~~'
+            return jsonify(resp)
+        else:
+            resp['code'] = 200
+            resp['msg'] = '登录成功!'
+            # resp['data'] = user_info.id
+            return jsonify(resp)
+    return "%s - %s" % (user_id, passwd)
