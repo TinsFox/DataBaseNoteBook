@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, request, jsonify
 from common.models.User import User
 from common.libs.user.UserService import UserService
 
@@ -28,17 +28,17 @@ def login():
             resp['msg'] = '请输入正确的密码'
             return jsonify(resp)
 
-        user_info = User.query.filter_by(id=user_id).first
+        user_info = User.query.filter_by(user_id=user_id)
         if not user_info:
             resp['code'] = -1
             resp['msg'] = '请输入正确的用户名和密码~~'
-        if user_info.passwd != UserService.genePwd(passwd, user_info.salt):
-            resp['code'] = -2
-            resp['msg'] = '请输入正确的密码~~'
-            return jsonify(resp)
+            print(user_info)
+        # if user_info.passwd != UserService.genePwd(passwd, user_info.salt):
+        #     resp['code'] = -2
+        #     resp['msg'] = '请输入正确的密码~~'
+        #     return jsonify(resp)
         else:
             resp['code'] = 200
             resp['msg'] = '登录成功!'
-            # resp['data'] = user_info.id
             return jsonify(resp)
     return "%s - %s" % (user_id, passwd)
