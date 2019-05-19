@@ -1,16 +1,14 @@
 from application import app, manager
-from flask_script import Server
-from flask_sqlalchemy import SQLAlchemy
+# 引入入口文件
 import www
 
+from flask_script import Server
 
-## web server
-# manager.add_command("runserver", Server(port=5000,use_debugger=True))
+# web Server
+manager.add_command("runserver", Server(port=5000))
 
 
 def main():
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:1234@47.106.155.159:3306/tinsfox'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.run(debug=True)
 
 
