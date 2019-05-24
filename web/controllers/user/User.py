@@ -24,7 +24,6 @@ def login():
     if login_name is None or len(login_name) < 1:
         resp['code'] = -1
         resp['msg'] = '请输入正确的用户名~!'
-        # app.logger(login_name)
         return jsonify(resp)
     if login_pwd is None or len(login_pwd) < 1:
         resp['code'] = -2
@@ -32,7 +31,7 @@ def login():
         return jsonify(resp)
 
     user_info = User.query.filter_by(login_name=login_name).first()
-    print(user_info.nickname)
+    # print(user_info.nickname)
     if not user_info:
         resp['code'] = -1
         resp['msg'] = '请输入正确的用户名和密码~~'
