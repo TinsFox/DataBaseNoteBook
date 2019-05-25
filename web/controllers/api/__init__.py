@@ -6,6 +6,7 @@ from web.controllers.api.Member import *
 from web.controllers.api.Login import *
 from web.controllers.api.course import *
 from web.controllers.api.book import *
+from web.controllers.api.order import *
 
 
 @route_api.route("/")
