@@ -3,7 +3,6 @@ from sqlalchemy import Column, DateTime, Float, String
 from sqlalchemy.schema import FetchedValue
 from flask_sqlalchemy import SQLAlchemy
 
-
 from application import db
 
 
@@ -17,3 +16,14 @@ class Book(db.Model):
     price = db.Column(db.Float(10), nullable=False)
     updated_time = db.Column(db.DateTime, nullable=False, server_default=db.FetchedValue())
     created_time = db.Column(db.DateTime, nullable=False, server_default=db.FetchedValue())
+
+    def to_json(self):
+        return {
+            'name': self.name,
+            'ISBN': self.ISBN,
+            'press': self.press,
+            'author': self.author,
+            'price': self.price,
+            'updated_time': self.updated_time,
+            'created_time': self.created_time,
+        }

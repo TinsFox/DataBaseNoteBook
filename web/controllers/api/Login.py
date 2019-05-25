@@ -22,6 +22,9 @@ def use():
         resp['msg'] = '请输入正确的密码~~'
         return jsonify(resp)
     login_info = Student.query.filter_by(xh=xh).first()
+    app.logger.info(login_info)
+    app.logger.info(xh)
+    app.logger.info(pwd)
     """
     SELECT *
     FROM student 

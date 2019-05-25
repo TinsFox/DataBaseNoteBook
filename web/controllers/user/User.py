@@ -14,7 +14,7 @@ route_user = Blueprint('uer_page', __name__)
 
 
 @route_user.route("/login", methods=["GET", "POST"])
-def login():
+def Userlogin():
     resp = {'code': 200, 'msg': '登录成功', 'data': {}}
     if request.method == 'GET':
         return "login GET"

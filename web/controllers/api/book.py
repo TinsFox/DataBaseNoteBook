@@ -6,7 +6,7 @@ from common.models.Book import Book
 
 
 @route_api.route("book/add", methods=["GET", "POST"])
-def use():
+def book():
     resp = {'code': 200, 'msg': '添加成功', 'data': {}}
     if request.method == 'GET':
         return "add Book"
@@ -40,8 +40,23 @@ def use():
     model_book.press = press
     model_book.created_time = getCurrentDate()
     model_book.updated_time = getCurrentDate()
-
     db.session.add(model_book)
     db.session.commit()
     # resp['data'] = {'permission': login_info.permission}
     return jsonify(resp)
+
+
+@route_api.route("book/show", methods=["GET", "POST"])
+def bookShow():
+    resp = {'code': 200, 'msg': '查询成功', 'data': {}}
+    resp_data = []
+    query = Book.query
+    query.count()
+    list = query.order_by(Book.ISBN.desc()).all()
+    for x in list:
+        resp_data.append(x.to_json())
+    resp['data'] = {'list': resp_data}
+    # resp_data['list'] = list
+    return jsonify(resp)
+
+

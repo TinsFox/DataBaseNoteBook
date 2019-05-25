@@ -36,15 +36,22 @@ def course():
     model_course.credit = credit
     model_course.created_time = getCurrentDate()
     model_course.updated_time = getCurrentDate()
-
     db.session.add(model_course)
     db.session.commit()
-    # resp['data'] = {'permission': course_info.permission}
     return jsonify(resp)
 
 
 @route_api.route("course/show", methods=["GET"])
-def show():
+def showCourse():
+    # resp_data = []
+    # query = Course.query
+    # query.count()
+    # resp = {'code': 200, 'msg': '查询成功', 'data': {}}
+    # list = query.order_by(Course.cid.desc()).all()
+    # for x in list:
+    #     resp_data.append(x.to_json())
+    # resp['data'] = {'data': list}
+    # return jsonify(resp_data)
     resp_data = []
     query = Course.query
     query.count()
@@ -52,7 +59,6 @@ def show():
     list = query.order_by(Course.cid.desc()).all()
     for x in list:
         resp_data.append(x.to_json())
-    resp['data'] = {'data': list}
-    # resp['data'] = {'list': list}
+    resp['data'] = {'list': resp_data}
     # resp_data['list'] = list
     return jsonify(resp)
