@@ -29,14 +29,14 @@ def course():
         resp['code'] = -2
         resp['msg'] = '课程已存在~~'
         return jsonify(resp)
-    model_course = Course()
-    model_course.name = name
-    model_course.cid = cid
-    model_course.type = type
-    model_course.credit = credit
-    model_course.created_time = getCurrentDate()
-    model_course.updated_time = getCurrentDate()
-    db.session.add(model_course)
+    model_order = Course()
+    model_order.name = name
+    model_order.cid = cid
+    model_order.type = type
+    model_order.credit = credit
+    model_order.created_time = getCurrentDate()
+    model_order.updated_time = getCurrentDate()
+    db.session.add(model_order)
     db.session.commit()
     return jsonify(resp)
 

@@ -1,4 +1,5 @@
 import datetime
+import time
 
 
 def iPagination(params):
@@ -24,3 +25,9 @@ def iPagination(params):
 
 def getCurrentDate(format="%Y-%m-%d %H:%n:%S"):
     return datetime.datetime.now().strftime(format)
+
+
+def getOrdreID():
+    order_no = str(time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))) \
+               + str(time.time()).replace('.', '')[-7:]
+    return order_no
