@@ -5,4 +5,4 @@ route_index = Blueprint('index_page', __name__)
 
 @route_index.route('/')
 def index():
-    return "Hello"
+    return "<p>Hello</p>"

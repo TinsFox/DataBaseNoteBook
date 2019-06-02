@@ -17,15 +17,12 @@ def OrderAdd():
     course_name = req['course_name'] if 'course_name' in req else ''
     book_name = req['book_name'] if 'book_name' in req else ''
     teacher_name = req['teacher_name'] if 'teacher_name' in req else ''
-    order_cout = req['order_cout'] if 'order_cout' in req else ''
-    use_grade = req['use_grade'] if 'use_grade' in req else ''
-    app.logger.info(course_name)
-    app.logger.info(teacher_name)
-    app.logger.info(order_cout)
-    app.logger.info(use_grade)
-    app.logger.info(book_name)
+    order_count = req['order_count'] if 'order_count' in req else ''
+    user_grade = req['user_grade'] if 'user_grade' in req else ''
+    app.logger.info(user_grade)
     if course_name is None or len(course_name) < 1 or teacher_name is None or len(
-            teacher_name) < 1 or order_cout is None or len(order_cout) < 1 or use_grade is None or len(use_grade) < 1 or book_name is None or len(book_name) < 1:
+            teacher_name) < 1 or order_count is None or len(order_count) < 1 or user_grade is None or len(
+        user_grade) < 1 or book_name is None or len(book_name) < 1:
         resp['code'] = -1
         resp['msg'] = '请输入正确的订单信息~!'
         return jsonify(resp)
@@ -36,15 +33,14 @@ def OrderAdd():
         resp['code'] = -2
         resp['msg'] = '已订购过此教材~~'
         return jsonify(resp)
-    total_price = float(book_info.price) * float(order_cout)
-    app.logger.info(total_price)
+    total_price = float(book_info.price) * float(order_count)
     model_order = OrderMessage()
     model_order.order_id = str(getOrdreID())
     model_order.course_name = course_name
     model_order.ISBN = book_info.ISBN
     model_order.teacher_name = teacher_name
-    model_order.order_cout = order_cout
-    model_order.use_grade = use_grade
+    model_order.order_cout = order_count
+    model_order.use_grade = user_grade
     model_order.total_price = str(total_price)
     model_order.created_time = getCurrentDate()
     model_order.updated_time = getCurrentDate()

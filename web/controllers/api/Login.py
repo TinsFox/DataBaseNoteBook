@@ -1,10 +1,10 @@
 from web.controllers.api import route_api
-from flask import request, jsonify, json
-from application import db, app
-from common.models.Student import Student
+from flask import request, jsonify
+from application import app
+from common.models.User import User
 
 
-@route_api.route("login", methods=["GET", "POST"])
+@route_api.route("login/", methods=["GET", "POST"])
 def use():
     resp = {'code': 200, 'msg': '登录成功', 'data': {}}
     if request.method == 'GET':
@@ -21,19 +21,17 @@ def use():
         resp['code'] = -2
         resp['msg'] = '请输入正确的密码~~'
         return jsonify(resp)
-    login_info = Student.query.filter_by(xh=xh).first()
-    app.logger.info(login_info)
-    app.logger.info(xh)
-    app.logger.info(pwd)
+    login_info = User.query.filter_by(xh=xh).first()
     """
     SELECT *
     FROM student 
     WHERE student.xh = xh
     """
-    if not login_info:
+    if not login_info or login_info.pwd != pwd:
         resp['code'] = -1
         resp['msg'] = '请输入正确的用户名和密码~~'
         return jsonify(resp)
+
     # 返回表里信息的permission身份字段
     resp['data'] = {'permission': login_info.permission}
     return jsonify(resp)

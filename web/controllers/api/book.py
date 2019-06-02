@@ -85,8 +85,6 @@ def modify():
         model_book.price = price
         model_book.press = press
         model_book.updated_time = getCurrentDate()
-    app.logger.info(getCurrentDate())
     db.session.add(model_book)
     db.session.commit()
-    # resp['data'] = {'permission': login_info.permission}
     return jsonify(resp)
